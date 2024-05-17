@@ -1,0 +1,153 @@
+﻿@model Mwc.Core.Models.PictureGallery
+@{
+    ViewBag.Title = "UploadPicture";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Pucture Upload</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Picture Upload</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a href="@Url.Action("PictureGalleryFolders","Gallery", new {Areas="Admin" })" class="btn btn-block btn-outline-primary btn-lg"><i class="fa fa-list"></i> View Galleries</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" id="frmGalleryInfo" action="@Url.Action("UploadPicture","Gallery", new { Areas="Admin" })" enctype="multipart/form-data">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-bars"></i>
+                                Picture Gallery
+                            </h3>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Gallery Title</label>
+                                        <input type="text" class="form-control" id="GalleryName" name="GalleryName" value="@Model.GalleryName" readonly="readonly" />
+                                        <input type="hidden" id="GalleryId" name="GalleryId" value="@Model.GalleryId" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Title</label>
+                                                    <input type="text" id="PictureTitle" name="PictureTitle" class="form-control"  />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="form-group">
+                                                    <label>Display Order</label>
+                                                    <input type="text" id="DisplaySL" name="DisplaySL" class="form-control"  />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="col-md-12">
+                                                <label>Select Picture</label>
+                                                <input type="file" id="StdPhoto" class="class=" custom-file-input" name="StdPhoto" onchange="readURL(this)" />
+                                            </div>
+                                            <div class="col-md-12">
+                                                <img id="stdPhoto" src="#" class="img-thumbnail" alt="Image" />
+                                            </div>
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" id="btnSubmit" class="btn btn-primary" value="Save" />
+                            <input type="button" id="btnCancel" class="btn btn-danger" value="Clear" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        $("#btnCancel").click(function () {
+            $('#frmGalleryInfo').data('bootstrapValidator').resetForm();
+            clearField();
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#stdPhoto')
+                        .attr('src', e.target.result)
+                        .width(320)
+                        .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $(document).ready(function () {
+
+            var data =@Html.Raw(Json.Encode(ViewBag.Message));
+            IntelliERP.Toastr.Show(data.MessageType, data.Message, null);
+
+            $('#frmGalleryInfo').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    GalleryName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+
+        function clearField() {
+            $('#GalleryName').val('');
+            $('#GalleryDescription').val('');
+        }
+
+    </script>
+}
+

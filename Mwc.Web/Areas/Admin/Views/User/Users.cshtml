@@ -1,0 +1,107 @@
+﻿@model IEnumerable<Mwc.Core.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Users";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">User(s)</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Users</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a href="@Url.Action("CreateUser","User")" class="btn btn-lg btn-success"><i class="fa fa-plus"></i> Create User</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-list"></i>
+                            List of Users
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <table class="table table-bordered table-striped" id="tblUsers">
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th width="1">#</th>                                        
+                                        <th>Full Name</th>
+                                        <th>User Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Is Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int rowNo = 0;}
+                                    @{
+
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@(rowNo += 1)</td>                                                
+                                                <td>@item.UserFullName</td>
+                                                <td>@item.UserName</td>
+                                                <td>@item.Email</td>
+                                                <td>@item.UserRoleList.RoleName</td>
+                                                <td>@item.IsActive</td>
+                                                <td><a href="@Url.Action("UpdateUser","User", new { userId=@item.UserId })" class="btn btn-default">Edit</a></td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+@section scripts{
+    <script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        var data =@Html.Raw(Json.Encode(ViewBag.Message));
+        IntelliERP.Toastr.Show(data.MessageType, data.Message, null);
+
+        $('#tblUsers').dataTable({
+            "order": []
+        });
+        $(".dataTables_wrapper").css("width", "100%");
+
+    });
+
+    </script>
+}
+

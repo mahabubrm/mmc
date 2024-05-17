@@ -1,0 +1,48 @@
+﻿@model Mwc.Core.Models.Website_Notice
+@{
+
+}
+
+<section class="inner-header divider parallax layer-overlay overlay-dark-8" data-bg-img="~/Content/publicsite/images/bg/bg6.jpg">
+    <div class="container pt-60 pb-60">
+        <!-- Section Content -->
+        <div class="section-content">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="font-28 text-white">
+                        Notice Details</h3>                        
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: Blog -->
+<section>
+    <div class="container mt-30 mb-30 pt-30 pb-0">
+        <div class="row multi-row-clearfix">
+            <div class="col-md-12">
+                <a href="http://bcsgea.org.bd/Attachments/WebsiteNoticeDocuments/@Model.NoticeAttachment" class="btn btn-success visible-xs">Read Full Screen</a>
+                <div class="ho-event pg-eve-main">
+                    <div class="embed-responsive embed-responsive-16by9">
+                        <iframe src="https://docs.google.com/gview?url=http://bcsgea.org.bd/Attachments/WebsiteNoticeDocuments/@Model.NoticeAttachment&embedded=true" style="width:1138px; height:500px;" frameborder="0"></iframe>
+                        @*<iframe class="embed-responsive-item" src="E:/Project/EIMS/Kash-EIMS/Kash-EIMS/Content/NoticeBoardFiles/@Model.NoticeAttachment" allowfullscreen></iframe>*@
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+
+        });
+
+        
+
+    </script>
+}

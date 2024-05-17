@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{9078D32F-7DF1-44AE-8910-18938DD21D0C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mwc.Core</RootNamespace>
+    <AssemblyName>Mwc.Core</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\..\Protyasha\Protyasha.CoreLib\bin\Debug\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BusinessLayer\Interface\IManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IPictureGalleryItemManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IPictureGalleryManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IRoleWiseScreenPermissionManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IScreenManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IUserManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IUserRoleManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IWebSiteBannerManager.cs" />
+    <Compile Include="BusinessLayer\Interface\IWebsiteNoticeManager.cs" />
+    <Compile Include="BusinessLayer\Manager\PictureGalleryItemManager.cs" />
+    <Compile Include="BusinessLayer\Manager\PictureGalleryManager.cs" />
+    <Compile Include="BusinessLayer\Manager\RoleWiseScreenPermissionManager.cs" />
+    <Compile Include="BusinessLayer\Manager\ScreenManager.cs" />
+    <Compile Include="BusinessLayer\Manager\UserManager.cs" />
+    <Compile Include="BusinessLayer\Manager\UserRoleManager.cs" />
+    <Compile Include="BusinessLayer\Manager\WebSiteBannerManager.cs" />
+    <Compile Include="BusinessLayer\Manager\WebsiteNoticeManager.cs" />
+    <Compile Include="DataLayer\Interface\IBaseRepository.cs" />
+    <Compile Include="DataLayer\Interface\IPictureGallery.cs" />
+    <Compile Include="DataLayer\Interface\IPictureGalleryItems.cs" />
+    <Compile Include="DataLayer\Interface\IRoleWiseScreenPermission.cs" />
+    <Compile Include="DataLayer\Interface\IScreen.cs" />
+    <Compile Include="DataLayer\Interface\IUser.cs" />
+    <Compile Include="DataLayer\Interface\IUserRole.cs" />
+    <Compile Include="DataLayer\Interface\IWebSiteBanner.cs" />
+    <Compile Include="DataLayer\Interface\IWebsiteNotice.cs" />
+    <Compile Include="DataLayer\Repository\BaseRepository.cs" />
+    <Compile Include="DataLayer\Repository\PictureGalleryItemRepository.cs" />
+    <Compile Include="DataLayer\Repository\PictureGalleryRepository.cs" />
+    <Compile Include="DataLayer\Repository\RoleWiseScreenPermissionRepository.cs" />
+    <Compile Include="DataLayer\Repository\ScreenRepository.cs" />
+    <Compile Include="DataLayer\Repository\UserRepository.cs" />
+    <Compile Include="DataLayer\Repository\UserRoleRepository.cs" />
+    <Compile Include="DataLayer\Repository\WebSiteBannerRepository.cs" />
+    <Compile Include="DataLayer\Repository\WebsiteNoticeRepository.cs" />
+    <Compile Include="Models\ApplicationClient.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicationClientBranch.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicationUser.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ApplicationUserDetail.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Common\AppConstant.cs" />
+    <Compile Include="Models\Common\AppDbConnection.cs" />
+    <Compile Include="Models\Common\AppSession.cs" />
+    <Compile Include="Models\Common\AppSetting.cs" />
+    <Compile Include="Models\Common\BillCommon.cs" />
+    <Compile Include="Models\Common\CheckSession.cs" />
+    <Compile Include="Models\Common\ClearCache.cs" />
+    <Compile Include="Models\Common\ConnectionStringBuilder.cs" />
+    <Compile Include="Models\Common\CurrentSession.cs" />
+    <Compile Include="Models\Common\DataCommon.cs" />
+    <Compile Include="Models\Common\DataEncryptionUtilities.cs" />
+    <Compile Include="Models\Common\DbContext.cs" />
+    <Compile Include="Models\Common\EmailNotification.cs" />
+    <Compile Include="Models\Common\EmailParameter.cs" />
+    <Compile Include="Models\Common\Parameter.cs" />
+    <Compile Include="Models\Common\PasswordHash.cs" />
+    <Compile Include="Models\Common\ReturnMessage.cs" />
+    <Compile Include="Models\Common\SuperAdmin.cs" />
+    <Compile Include="Models\Common\UserLogin.cs" />
+    <Compile Include="Models\MwcModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MwcModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MwcModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\MwcModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MwcModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PictureGallery.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PictureGalleryItem.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\RoleWiseScreenPermission.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Screen.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\UserRoleList.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ViewModels\ChangePasswordViewModel.cs" />
+    <Compile Include="Models\ViewModels\HomePageContentViewModel.cs" />
+    <Compile Include="Models\ViewModels\MenuViewModel.cs" />
+    <Compile Include="Models\ViewModels\NoticeViewModel.cs" />
+    <Compile Include="Models\ViewModels\RoleWisePermissionSelectionViewModel.cs" />
+    <Compile Include="Models\ViewModels\RoleWisePermissionViewModel.cs" />
+    <Compile Include="Models\WebSiteBanner.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Website_Notice.cs">
+      <DependentUpon>MwcModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UtilityClassLib\SqlQryManager.cs" />
+    <Compile Include="UtilityClassLib\UtilityManager.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Models\MwcModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>MwcModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Models\MwcModel.edmx.diagram">
+      <DependentUpon>MwcModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Models\MwcModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MwcModel.edmx</DependentUpon>
+      <LastGenOutput>MwcModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\MwcModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>MwcModel.edmx</DependentUpon>
+      <LastGenOutput>MwcModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+</Project>

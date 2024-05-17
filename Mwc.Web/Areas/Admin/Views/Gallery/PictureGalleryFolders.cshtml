@@ -1,0 +1,70 @@
+﻿@model IEnumerable<Mwc.Core.Models.PictureGallery>
+@{
+    ViewBag.Title = "PictureGallery";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="about_main">
+    <div class="services_main">
+        <div class="container">
+            <div class="creative_taital">
+                <h1 class="creative_text">Picture Gallery</h1>
+                <div class="row" style="padding:10px;">
+                    <div class="col-md-12">
+                        <table class="table table-info" id="tblNotices" style="border:1px solid #0094ff">
+                            <thead class="thead-default">
+                                <tr>
+                                    <th width="1">#</th>
+                                    <th>Gallery Name</th>
+                                    <th>Total Picture</th>                                    
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{ int rowNo = 0;}
+                                @{
+
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td style="width:15px;"><h5>@(rowNo += 1)</h5></td>
+                                            <td>
+                                                @item.GalleryName
+                                            </td>
+                                            <td>
+                                                @item.PictureGalleryItems.Where(o => o.GalleryId == item.GalleryId).ToList().Count()
+                                            </td>
+                                            <td class="text-center">
+                                                @*<a href="@Url.Action("MemberUpdate", "Gallery", new { memberNo = @item.GalleryId, Areas="Admin" })" class="btn btn-sm btn-primary"><i class="fa fa-edit"></i>Edit</a>*@
+                                                <a href="@Url.Action("UploadPicture", "Gallery", new { galleryId = @item.GalleryId, Areas="Admin" })" class="btn btn-sm btn-outline-dark"><i class="fa fa-upload"></i>Upload Picture</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            var data =@Html.Raw(Json.Encode(ViewBag.Message));
+            IntelliERP.Toastr.Show(data.MessageType, data.Message, null);
+
+            $('#tblNotices').dataTable({
+                "order": []
+            });
+            $(".dataTables_wrapper").css("width", "100%");
+        });
+
+    </script>
+}

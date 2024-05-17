@@ -1,0 +1,166 @@
+﻿
+@{
+    ViewBag.Title = "AddBanner";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .file-upload-default {
+        visibility: hidden;
+        position: absolute;
+    }
+</style>
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Banner Image Upload</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Website banner</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a href="@Url.Action("Banner","Gallery")" class="btn btn-block btn-outline-primary btn-lg"><i class="fa fa-list"></i> View All Banners</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form id="frmBanner" method="post" action="@Url.Action("AddBanner","Gallery", new { Area="Admin"})" enctype="multipart/form-data">
+
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-bars"></i>
+                                Banner Image Upload
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>File upload (1920x1280)</label>
+                                        <input type="file" id="bannerFile" name="bannerFile" class="file-upload-default" onchange="readURL(this)">
+                                        <div class="input-group col-xs-12">
+                                            <input type="text" class="form-control file-upload-info" disabled placeholder="Upload Image">
+                                            <span class="input-group-append">
+                                                <button class="file-upload-browse btn btn-primary" type="button">Browse</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group">
+                                        <label for="exampleInputName1">Display Order</label>
+                                        <input type="text" class="form-control" id="DisplaySL" name="DisplaySL" placeholder="Display Order">
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" style="margin-top:36px;">
+                                        <div class="form-check mx-sm-2">
+                                            <label class="form-check-label">
+                                                <input type="checkbox" class="form-check-input" checked="checked" value="true" id="IsDisplay" name="IsDisplay">
+                                                Is Display
+                                                <i class="input-helper"></i>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <img id="bannerImg" src="#" class="img-thumbnail" alt="Image" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" id="btnSubmit" class="btn btn-primary mr-2" value="Save" />
+                            <button class="btn btn-light">Cancel</button>
+                        </div>
+                    </div>
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+@section scripts{
+    <script type="text/javascript">
+
+
+        $("#btnCancel").click(function () {
+            $('#frmClassInfo').data('bootstrapValidator').resetForm();
+            clearField();
+        });
+
+
+        $(document).ready(function () {
+                       
+
+            $('#frmBanner').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    DisplaySL: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    }
+                }
+            });
+
+            $('.file-upload-browse').on('click', function () {
+                var file = $(this).parent().parent().parent().find('.file-upload-default');
+                file.trigger('click');
+            });
+
+            $('.file-upload-default').on('change', function () {
+                $(this).parent().find('.form-control').val($(this).val().replace(/C:\\fakepath\\/i, ''));
+            });
+
+        });
+
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $('#bannerImg')
+                        .attr('src', e.target.result)
+                        .width(320)
+                        .height(200);
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
+}
+
+
+

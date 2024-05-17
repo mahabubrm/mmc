@@ -1,0 +1,162 @@
+﻿@using Mwc.Core.Models.Common
+@model Mwc.Core.Models.ApplicationUser
+@{
+    ViewBag.Title = "UpdateUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">User Update</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">User</li>
+                </ol>
+            </div>
+        </div>
+        @*<div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0 text-dark"></h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <a href="@Url.Action("Users","User")" class="btn btn-block btn-outline-primary btn-lg"><i class="fa fa-list"></i> View Users</a>
+                    </ol>
+                </div>
+            </div>*@
+    </div>
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" id="frmUser" action="@Url.Action("UpdateUser","User")">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user"></i>
+                                User Update
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-horizontal">
+                                        <label>Full Name</label>
+                                        <input type="text" class="form-control" name="UserFullName" id="UserFullName" value="@Model.UserFullName" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Employee ID</label>
+                                        <input type="text" class="form-control" name="EmployeeID" id="EmployeeID" value="@Model.EmployeeID" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" name="Email" id="Email" value="@Model.Email" readonly="readonly" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Mobile</label>
+                                        <input type="text" class="form-control" name="ContactNo" id="ContactNo" value="@Model.ContactNo" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-horizontal">
+                                        <label>User Name</label>
+                                        <input type="text" class="form-control" name="UserName" id="UserName" value="@Model.UserName" readonly="readonly" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="text" class="form-control" name="Password" id="Password" value="@Model.Password" readonly="readonly" />
+                                        <label style="color:red;">@DataEncryptionUtilities.GenerateDecryptedString(Model.Password)</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        @Html.DropDownList("RoleId", ViewBag.Roles as IEnumerable<SelectListItem>, "Select Role", new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" style="margin-top:32px;">
+                                        <div class="checkbox m-b-1">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" @(Convert.ToBoolean(Model.IsActive) == true ? "checked='checked'" : string.Empty) value="true">
+                                                <label class="form-check-label" for="IsActive">Is Active</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" id="btnSubmit" class="btn btn-primary" value="Save Changes" />
+                            <a href="@Url.Action("Users","User")" class="btn btn-danger">Cancel</a>
+                            <input type="hidden" id="UserId" name="UserId" value="@Model.UserId" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        $("#btsCancel").click(function () {
+            $('#frmUnits').data('bootstrapValidator').resetForm();
+            clearField();
+        });
+
+
+        $(document).ready(function () {
+
+            $('#frmUser').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    UserFullName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    },
+
+                    RoleId: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+
+    </script>
+}
+
+

@@ -1,0 +1,70 @@
+﻿@using Mwc.Core.Models.Common
+@model IEnumerable<Mwc.Core.Models.ViewModels.MenuViewModel>
+@{
+    var session = ViewBag.Session as AppSession;
+}
+<div class="sidebar">
+    <!-- Sidebar user panel (optional) -->
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+        <div class="image">
+            <img src="~/Content/images/user-icon.png" class="img-circle elevation-2" alt="User Image">
+        </div>
+        <div class="info">
+            <a href="#" class="d-block">@session.UserFullName</a>            
+        </div>
+    </div>
+
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+
+            @foreach (var m in Model)
+            {
+                if (m.MenuParentID.Trim() == "00000".Trim())
+                {
+                    var submenu = Model.Where(n => n.MenuParentID == m.MenuCode).ToList();
+
+                    if (submenu != null && submenu.Count > 0)
+                    {
+                        <li class="nav-item has-treeview">
+                            <a href="#" class="nav-link">
+                                <i class="@m.MenuIcon"></i>
+                                <p>
+                                    @m.MenuName
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                @foreach (var e in submenu)
+                                {
+                                    <li class="nav-item">
+                                        <a href="@e.MenuURL" class="nav-link">
+                                            <i class="@e.MenuIcon"></i>
+                                            <p>@e.MenuName</p>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </li>
+
+                    }
+                    else
+                    {
+                        <li class="nav-item has-treeview">
+                            <a href="@m.MenuURL" class="nav-link">
+                                <i class="@m.MenuIcon"></i>
+                                <p>
+                                    @m.MenuName
+                                </p>
+                            </a>
+                        </li>
+
+                    }
+                }
+                
+            }
+
+        </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+</div>

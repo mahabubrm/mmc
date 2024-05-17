@@ -1,0 +1,106 @@
+﻿@model IEnumerable<Mwc.Core.Models.WebSiteBanner>
+@{
+    ViewBag.Title = "Banner";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">All Banner(s)</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Banner</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a href="@Url.Action("AddBanner","Gallery")" class="btn btn-lg btn-success"><i class="fa fa-plus"></i> Add Banner</a>
+                    
+                </ol>
+                <ol class="breadcrumb float-sm-right" style=" margin-right:5px;">
+                    <a href="#" class="btn btn-lg btn-outline-primary"><i class="fa fa-bars"></i> Update SL</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-list"></i>
+                            Website Banner
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <table class="table table-bordered table-striped" id="tblRecords">
+                                <thead class="thead-default">
+                                    <tr>
+                                        <th width="1">#</th>
+                                        <th>Banner Image</th>
+                                        <th>Display SL</th>
+                                        <th>Is Active</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{ int rowNo = 0;}
+                                    @{ foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@(rowNo += 1)</td>
+                                                <td><img src="~/Attachments/Slider/@item.BannerImgName" alt="image" width="150" /></td>
+                                                <td><input type="text" id="displaySl" class="col-3 form-control" value="@item.DisplaySL" /> </td>
+                                                <td>@item.IsDisplay</td>
+                                                <td class="text-center">                                                    
+                                                    <a href="@Url.Action("DeleteBannerImg", "Gallery", new { bannerId = @item.Id })" onclick="return confirm('Are you sure you wish to delete this data?');" class="btn btn-sm btn-outline-danger"><i class="fa fa-times"></i> Remove</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section scripts{
+    <script type="text/javascript">
+
+
+    $(document).ready(function () {
+
+        var data =@Html.Raw(Json.Encode(ViewBag.Message));
+        IntelliERP.Toastr.Show(data.MessageType, data.Message, null);
+
+        $('#tblRecords').dataTable({
+            "order": []
+        });
+        $(".dataTables_wrapper").css("width", "100%");
+
+    });
+
+    </script>
+}
+
+
+

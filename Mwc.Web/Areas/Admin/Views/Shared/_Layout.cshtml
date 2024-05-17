@@ -1,0 +1,183 @@
+﻿@using Mwc.Core.Models.Common
+@{
+    var session = ViewBag.Session as AppSession;    
+}
+
+<!DOCTYPE html>
+<style type="text/css">
+    .table td {
+        padding: 0.40rem !important;
+        vertical-align: middle !important;
+    }
+    .select2-container .select2-selection--single {
+        height: calc(2.25rem + 2px) !important;
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: 5px !important;
+    }
+
+    .content-wrapper {
+        min-height: 545px !important;
+    }    
+</style>
+<html lang="en">
+
+<!-- BEGIN HEAD -->
+<head>
+    <meta charset="UTF-8">
+    <title>MMC :: Back Office</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="~/Content/plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="~/Content/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="~/Content/plugins/overlayScrollbars/css/OverlayScrollbars.min.css">
+    <link href="~/Content/plugins/select2/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/plugins/daterangepicker/daterangepicker.css">
+    @*<link href="~/Content/plugins/datatables/dataTables.bootstrap4.css" rel="stylesheet" />*@
+    <link href="~/Content/dist/css/bootstrapValidator.css" rel="stylesheet" />
+    <link href="~/Content/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/datatables/fixedColumns.dataTables.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/tabletools/2.2.4/css/dataTables.tableTools.css" />
+    <link href="~/Content/plugins/summernote/summernote-bs4.css" rel="stylesheet" />
+    <link href="~/Content/plugins/bootstrap-timepicker/css/bootstrap-timepicker.css" rel="stylesheet" />
+    <link href="~/Content/plugins/digitalclock/css/mobile.css" rel="stylesheet" />
+    <link href="~/Content/plugins/digitalclock/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css" rel="stylesheet" type="text/css">
+
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+</head>
+<!-- END HEAD -->
+
+
+<body class="hold-transition sidebar-mini layout-fixed" onload="initClock()">
+
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand border-bottom navbar-dark navbar-primary">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="@Url.Action("Index", "BackOffice", new { Areas="Admin" })" class="nav-link"> Dashboard</a>
+                </li>
+            </ul>
+
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-user-circle"></i> Welcome, @session.UserFullName
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user-circle mr-2"></i> View Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="@Url.Action("LogOut", "BackOfficeLogin", new { Areas="Admin" } )" class="dropdown-item">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Sign Out
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar elevation-4 sidebar-light-primary">
+            <!-- Brand Logo -->
+            <a href="#" class="brand-link navbar-primary" style="padding: .8125rem 4.5rem !important;">
+                <img src="" alt="" class="brand-image img-circle elevation-3"
+                     style="opacity: .8">
+                <span class="brand-text font-weight-light text-white" style=""><b>Back Office</b></span>
+            </a>
+
+            <!-- Sidebar -->
+            @{Html.RenderAction("Menu", "Menu", new { area = "admin" });}
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <footer class="main-footer">
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version :</b> 1.0.0.0
+            </div>
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+    </div>
+
+
+
+    <!-- remove ks-page-header-fixed to unfix header -->
+    <!-- BEGIN HEADER -->
+    <!-- jQuery -->
+    <script src="~/Content/plugins/jquery/jquery.min.js"></script>
+    <script src="~/Content/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Content/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/Content/plugins/select2/js/select2.full.min.js"></script>
+
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script src="~/Content/plugins/moment/moment.min.js"></script>
+    <script src="~/Content/plugins/daterangepicker/daterangepicker.js"></script>
+    <script src="~/Content/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>
+    <script src="~/Content/plugins/toastr/toastr.min.js"></script>
+    <script src="~/Content/custom/js/erp.js"></script>
+    <script src="~/Content/dist/js/bootstrapValidator.js"></script>
+    <script src="~/Content/plugins/datatables/jquery.dataTables.js"></script>
+    <script src="~/Content/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/plugins/datatables/dataTables.fixedColumns.min.js"></script>
+    @*<script src="~/Content/plugins/datatables/dataTables.bootstrap4.js"></script>*@
+    <script src="~/Content/plugins/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+    <script src="~/Content/dist/js/adminlte.js"></script>
+    <script src="//cdn.datatables.net/tabletools/2.2.4/js/dataTables.tableTools.min.js"></script>
+    <script src="~/Content/plugins/summernote/summernote-bs4.min.js"></script>
+    <script src="~/Content/plugins/digitalclock/js/clock.js"></script>
+    <script src="~/Content/plugins/digitalclock/js/digital.js"></script>
+    @RenderSection("scripts", false)
+</body>
+</html>

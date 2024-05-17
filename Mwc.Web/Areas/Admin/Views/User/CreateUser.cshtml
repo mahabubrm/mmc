@@ -1,0 +1,236 @@
+﻿
+@{
+    ViewBag.Title = "CreateUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">User Setup</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">User</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a href="@Url.Action("Users","User")" class="btn btn-block btn-outline-primary btn-lg"><i class="fa fa-list"></i> View Users</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" id="frmUser" action="@Url.Action("CreateUser","User")">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user"></i>
+                                User Setup
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-horizontal">
+                                        <label>Full Name</label>
+                                        <input type="text" class="form-control" name="UserFullName" id="UserFullName" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Employee ID</label>
+                                        <input type="text" class="form-control" name="EmployeeID" id="EmployeeID" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Email</label>
+                                        <input type="text" class="form-control" name="Email" id="Email" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Mobile</label>
+                                        <input type="text" class="form-control" name="ContactNo" id="ContactNo" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-horizontal">
+                                        <label>User Name</label>
+                                        <input type="text" class="form-control" name="UserName" id="UserName" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="text" class="form-control" name="Password" id="Password" />
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Role</label>
+                                        @Html.DropDownList("RoleId", ViewBag.Roles as IEnumerable<SelectListItem>, "Select Role", new { @class = "form-control" })
+
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group" style="margin-top:32px;">
+                                        <div class="checkbox m-b-1">
+                                            <div class="form-check">
+                                                <input type="checkbox" class="form-check-input" id="IsActive" name="IsActive" checked="checked" value="true">
+                                                <label class="form-check-label" for="IsActive">Is Active</label>
+                                            </div>
+                                            @*<label class="custom-control custom-checkbox">
+                                                <input type="checkbox" id="IsActive" name="IsActive" class="custom-control-input">
+                                                <span class="custom-control-indicator"></span>
+                                                <span class="custom-control-description">Is Active</span>
+                                            </label>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="button" id="btnSubmit" class="btn btn-primary" value="Create User" />
+                            <input type="button" id="btsCancel" class="btn btn-danger" value="Clear" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        $("#btsCancel").click(function () {
+            $('#frmUnits').data('bootstrapValidator').resetForm();
+            clearField();
+        });
+
+
+        $(document).ready(function () {
+
+            $('#frmUser').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    UserFullName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    },
+                    Email: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            },
+                            emailAddress: {
+                                message: 'The value is not a valid email address'
+                            }
+                        }
+                    },
+                    UserName: {
+                        validators: {
+                            //remote: {
+                            //    url: '/User/UserIsValid/',
+                            //    //data: function (validator) {
+                            //    //    return {
+                            //    //        userName: validator.getFieldElements('UserName').val()
+                            //    //    };
+                            //    //},         
+                            //    data: {userName:$('#UserName').val('')},
+                            //    message: 'The user name is not available'
+                            //},
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    },
+                    Password: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    },
+                    RoleId: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+
+
+        $("#btnSubmit").click(function () {
+            $('#frmUser').data('bootstrapValidator').resetForm();
+            $('#frmUser').bootstrapValidator('validate');
+            var isValid = $('#frmUser').data('bootstrapValidator').isValid();
+            if (isValid) {
+                save();
+            }
+        });
+
+        var save = function () {
+
+            $.ajax({
+                url: '@Url.Action("CreateUser","User")',
+                type: 'post',
+                data: $('#frmUser').serialize(),
+                success: function (res) {
+                    IntelliERP.Toastr.Show(res.MessageType, res.Message, null);
+                    if (res.MessageType == '1') {
+
+                        clearField();
+                    }
+                },
+                error: function () {
+                }
+            });
+        };
+
+        function clearField() {
+            $('#UserFullName').val('');
+            $('#EmployeeID').val('');
+            $('#Email').val('');
+            $('#ContactNo').val('');
+            $('#UserName').val('');
+            $('#Password').val('');
+        }
+
+    </script>
+}
+
+
+
+

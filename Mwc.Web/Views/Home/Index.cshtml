@@ -1,0 +1,347 @@
+﻿﻿@model Mwc.Core.Models.ViewModels.HomePageContentViewModel
+
+@{    
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    .inlineList {
+        display: flex;
+        flex-direction: row;
+        /* Below sets up your display method: flex-start|flex-end|space-between|space-around */
+        justify-content: flex-start;
+        /* Below removes bullets and cleans white-space */
+        list-style: none;
+        padding: 0;
+        /* Bonus: forces no word-wrap */
+        white-space: nowrap;
+    }
+</style>
+<!-- Section: home -->
+<section id="home">
+
+    <!-- Slider Revolution Start -->
+    <div class="rev_slider_wrapper">
+        <div class="rev_slider" data-version="5.0">
+            <ul>
+                @{ int indx = 1;}
+                @{
+
+                    foreach (var item in Model.Banners)
+                    {
+                        string bannerSource = "";
+                        if (!string.IsNullOrEmpty(item.BannerImgName))
+                        {
+                            bannerSource = "/Attachments/Slider/" + item.BannerImgName;
+                        }
+                        else
+                        {
+                            bannerSource = "https://placehold.co/1920x1280";
+                        }
+                        
+                        <li data-index="rs-@indx" data-transition="slidingoverlayhorizontal" data-slotamount="default" data-easein="default" data-easeout="default" data-masterspeed="default" data-thumb="@bannerSource" data-rotate="0" data-saveperformance="off" data-title="Slide 1" data-description="">
+                            <!-- MAIN IMAGE -->
+                            <img src="@bannerSource" alt="" data-bgposition="center center" data-bgfit="cover" data-bgrepeat="no-repeat" class="rev-slidebg" data-bgparallax="10" data-no-retina>
+
+                        </li>
+                        indx++;
+                    }
+                }
+                
+
+            </ul>
+        </div>
+        <!-- end .rev_slider -->
+    </div>
+    <!-- end .rev_slider_wrapper -->
+    <!-- Slider Revolution Ends -->
+
+</section>
+
+<!-- Section: welcome -->
+<section>
+    <div class="container pt-0 pb-0">
+        <div class="section-content">
+            <div class="row equal-height-inner mt-sm-0" data-margin-top="-150px">
+                <div class="col-sm-12 col-md-6 pr-0 pr-sm-15 sm-height-auto mt-sm-0 wow fadeInLeft animation-delay1">
+                    <div class="sm-height-auto" data-bg-img="/Content/publicsite/images/about/h1.jpg">
+                        <div class="p-20">
+                            <h3 class="text-white text-uppercase">Chairman, Governing Body</h3>
+                            <div class="clearfix">
+                                <img src="~/Content/images/nanak.jpeg">
+                            </div>
+                            <p class="text-white-f1 mt-10 lead">Adv. Jahangir Kabir Nanak </p>
+                            <a href="#" class="btn btn-default font-14 btn-theme-colored mt-10 hvr-bounce-to-left no-border">Message</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 pl-0 pl-sm-15 pr-sm-15 sm-height-auto mt-sm-0 wow fadeInLeft animation-delay2">
+                    <div class="sm-height-auto" data-bg-img="/Content/publicsite/images/about/h2.jpg">
+                        <div class="p-30">
+                            <h3 class="text-white text-uppercase">Principal</h3>
+                            <div class="clearfix">
+                                <img src="~/Content/images/principal.png">
+                            </div>
+                            <p class="lead text-white-f1">Prof. Md. Aminul Haque</p>
+                            <ul class="pull-left flip hidden-sm hidden-xs">
+                                <li>
+                                    <!-- Modal: Book Now Starts -->
+                                    <a class="btn btn-default text-theme-colored font-14 bs-modal-ajax-load mt-0 p-10 pr-15" data-toggle="modal" data-target="#BSParentModal" href="ajax-load/reservation-form.html">Message</a>
+                                    <!-- Modal: Book Now End -->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: courses -->
+<section id="blog">
+    <div class="container pb-70 pt-60 pb-sm-20">
+        <div class="section-title text-center">
+            <div class="row">
+                <div class="col-md-12">
+                    <h2 class="mt-10 line-height-1 text-uppercase">Recent  <span class="text-theme-color-2"> News</span></h2>
+                    <p class="mb-0">
+                        <marquee behavior="scroll" direction="left" onmouseover="this.stop();" onmouseout="this.start();">
+                            <ul class="inlineList">
+                                @if (ViewBag.Marquee != null)
+                                {
+                                    var scrollList = ViewBag.Marquee;
+                                    foreach (var item in scrollList)
+                                    {
+                                        <li style="margin-left:30px;">
+                                            <a href="@Url.Action("ReadNotice","Home", new { noticeId=item.NoticeId})">
+                                                <i class="fa fa-circle"></i> @item.NoticeTitle
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
+                        </marquee>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="row">
+                @{ if (Model.Notices.Count() > 0)
+                    {
+                        foreach (var nItem in Model.Notices)
+                        {                            
+                            <div class="col-xs-12 col-sm-12 col-md-12 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.3s">
+                                <article class="post clearfix mb-sm-30">                                    
+                                    <div class="entry-content p-20 pr-10">
+                                        <div class="entry-meta media mt-0 no-bg no-border">
+                                            <div class="entry-date media-left flip text-center">
+                                                <ul>
+                                                    <li class="font-16 font-weight-600 border-bottom bg-white-f1 pt-5 pr-15 pb-5 pl-15">@Convert.ToDateTime(nItem.NoticeDate).Day</li>
+                                                    <li class="font-12 text-white text-uppercase bg-theme-colored pt-5 pr-15 pb-5 pl-15">@Convert.ToDateTime(nItem.NoticeDate).ToString("MMM")</li>
+                                                </ul>
+                                            </div>
+                                            <div class="media-body pl-10">
+                                                <div class="event-content pull-left flip">
+                                                    @*<h4 class="entry-title text-white text-capitalize m-0"><a href="@Url.Action("ReadNotice","Home", new { noticeId=nItem.NoticeId})">@((nItem.NoticeTitle==null)?"Bcsgea News Title":(nItem.NoticeTitle.Length<40)? nItem.NoticeTitle.Substring(0, nItem.NoticeTitle.Length):nItem.NoticeTitle.Substring(0,40))</a></h4>*@
+                                                    <h5 class="entry-title text-white text-capitalize m-0"><a href="@Url.Action("ReadNotice","Home", new { noticeId=nItem.NoticeId})">@nItem.NoticeTitle</a></h5>
+                                                    <span class="mb-10 text-gray-darkgray mr-10 font-13"><i class="fa fa-commenting-o mr-5 text-theme-colored"></i> publish date: @Convert.ToDateTime(nItem.NoticeDate).ToString("dd-MMMM-yyyy")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*<p class="mt-10">@((nItem.NoticeDetails==null)?"Bcsgea News Details Section":(nItem.NoticeDetails.Length<101)? nItem.NoticeDetails.Substring(0, nItem.NoticeDetails.Length):nItem.NoticeDetails.Substring(0,100))</p>
+                                        <div class="mt-10"> <a href="@Url.Action("ReadNotice","Home", new { noticeId=nItem.NoticeId})" class="btn btn-theme-colored btn-sm">Read More</a> </div>*@
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </article>
+                            </div>
+                        }
+                    }
+                }
+
+            </div>
+            
+            @*<div class="row">
+                <div class="col-md-12 text-right">
+                    <a href="@Url.Action("Notices","Home")" class="btn btn-default hvr-bounce-to-right">Read all news</a>
+                </div>
+            </div>*@
+        </div>
+    </div>
+</section>
+
+
+<!-- Section: Mission -->
+<section id="mission">
+    <div class="container-fluid pt-0 pb-0">
+        <div class="row equal-height">
+            <div class="col-sm-6 col-md-6 pull-right xs-pull-none bg-theme-colored wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.3s">
+                <div class="pt-60 pb-40 pl-90 pr-160 p-md-30">
+                    <h2 class="title text-white text-uppercase line-bottom mt-0 mb-30">Mujib Corner</h2>
+                    <div class="icon-box clearfix m-0 p-0 pb-10">
+
+                        <p><font color='#fff'>Sheikh Mujibur Rahman (Bengali: শেখ মুজিবুর রহমান; 17 March 1920 – 15 August 1975), often shortened as Sheikh Mujib or Mujib and widely known as Bangabandhu was a Bangladeshi politician, statesman and Founding Father of Bangladesh who served as the first President and later as the Prime Minister of Bangladesh from April 1971 until his assassination in August 1975. Mujib is credited with leading the successful campaign for Bangladesh’s independence from Pakistan. He is revered in Bangladesh with the honourific title of “Bangabandhu” (Bôngobondhu “Friend of Bengal”) which is used around the world. He was a founding member and eventual leader of the Awami League, founded in 1949 as an East Pakistan–based political party in Pakistan. Mujib is considered to have been a fundamental figure in the efforts to gain political autonomy for East Pakistan and later as the central figure behind the Bangladesh Liberation Movement and the Bangladesh Liberation War in 1971. Thus, he is regarded as the “Jatir Janak” or “Jatir Pita” (Jatir Jônok or Jatir Pita, both meaning “Father of the Nation”) of Bangladesh. His daughter Sheikh Hasina is the current leader of the Awami League and currently serves as the Prime Minister of Bangladesh.</font></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-md-6 p-0 bg-img-cover wow fadeInRight hidden-xs" data-bg-img="/Content/publicsite/images/photos/ab1.jpg" data-wow-duration="1s" data-wow-delay="0.3s">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Section: Gallery -->
+<section class="divider parallax layer-overlay overlay-dark-8" data-bg-img="~/Content/publicsite/images/bg/bg6.jpg" id="gallery">
+    <div class="container pt-60 pb-40">
+        <div class="section-title text-center">
+            <div class="row">
+                <div class="col-md-8 col-md-offset-2">
+                    <h2 class="mt-0 pb-0 mb-0 text-white text-uppercase">Photo  <span class="text-theme-color-2">Gallery</span></h2>
+                </div>
+            </div>
+        </div>
+        <div class="section-content">
+            <div class="row">
+                <!-- Gallery Grid -->
+                <div class="owl-carousel-4col" data-nav="true">
+
+                    @{
+                        foreach (var item in Model.PictureGallery)
+                        {
+                            string galleryImgSource = "";
+                            if (!string.IsNullOrEmpty(item.PictureName))
+                            {
+                                galleryImgSource = "/Attachments/PictureGallery/" + item.PictureName;
+                            }
+                            else
+                            {
+                                galleryImgSource = "https://placehold.co/290x180";
+                            }
+                                                        
+                            <div class="item">
+                                <div class="work-gallery">
+                                    <div class="gallery-thumb">
+                                        <img class="img-fullwidth" alt="" src="@galleryImgSource">
+                                        <div class="gallery-overlay"></div>
+                                        <div class="gallery-contect">
+                                            <ul class="styled-icons icon-bordered icon-circled icon-sm">
+                                                <li><a href="#"><i class="fa fa-link"></i></a></li>
+                                                <li><a data-rel="prettyPhoto" href="@galleryImgSource"><i class="fa fa-arrows"></i></a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="gallery-bottom-part text-center">
+                                        <h4 class="title text-uppercase font-raleway font-weight-600 m-0">@((item.PictureTitle==null)?"Gallery Item":item.PictureTitle)</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    }
+                    
+                </div>
+                <!-- End Gallery Grid -->
+            </div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script type="text/javascript">
+
+        
+        $(document).ready(function () {
+            $(".rev_slider").revolution({
+                sliderType: "standard",
+                sliderLayout: "auto",
+                dottedOverlay: "none",
+                delay: 5000,
+                navigation: {
+                    keyboardNavigation: "off",
+                    keyboard_direction: "horizontal",
+                    mouseScrollNavigation: "off",
+                    onHoverStop: "off",
+                    touch: {
+                        touchenabled: "on",
+                        swipe_threshold: 75,
+                        swipe_min_touches: 1,
+                        swipe_direction: "horizontal",
+                        drag_block_vertical: false
+                    },
+                    arrows: {
+                        style: "zeus",
+                        enable: true,
+                        hide_onmobile: true,
+                        hide_under: 600,
+                        hide_onleave: true,
+                        hide_delay: 200,
+                        hide_delay_mobile: 1200,
+                        tmp: '<div class="tp-title-wrap">    <div class="tp-arr-imgholder"></div> </div>',
+                        left: {
+                            h_align: "left",
+                            v_align: "center",
+                            h_offset: 30,
+                            v_offset: 0
+                        },
+                        right: {
+                            h_align: "right",
+                            v_align: "center",
+                            h_offset: 30,
+                            v_offset: 0
+                        }
+                    },
+                    bullets: {
+                        enable: true,
+                        hide_onmobile: true,
+                        hide_under: 600,
+                        style: "metis",
+                        hide_onleave: true,
+                        hide_delay: 200,
+                        hide_delay_mobile: 1200,
+                        direction: "horizontal",
+                        h_align: "center",
+                        v_align: "bottom",
+                        h_offset: 0,
+                        v_offset: 30,
+                        space: 5,
+                        tmp: '<span class="tp-bullet-img-wrap">  <span class="tp-bullet-image"></span></span><span class="tp-bullet-title">{{title}}</span>'
+                    }
+                },
+                responsiveLevels: [1240, 1024, 778],
+                visibilityLevels: [1240, 1024, 778],
+                gridwidth: [1170, 1024, 778, 480],
+                gridheight: [650, 768, 960, 720],
+                lazyType: "none",
+                parallax: {
+                    origo: "slidercenter",
+                    speed: 1000,
+                    levels: [5, 10, 15, 20, 25, 30, 35, 40, 45, 46, 47, 48, 49, 50, 100, 55],
+                    type: "scroll"
+                },
+                shadow: 0,
+                spinner: "off",
+                stopLoop: "on",
+                stopAfterLoops: 0,
+                stopAtSlide: -1,
+                shuffle: "off",
+                autoHeight: "off",
+                fullScreenAutoWidth: "off",
+                fullScreenAlignForce: "off",
+                fullScreenOffsetContainer: "",
+                fullScreenOffset: "0",
+                hideThumbsOnMobile: "off",
+                hideSliderAtLimit: 0,
+                hideCaptionAtLimit: 0,
+                hideAllCaptionAtLilmit: 0,
+                debugMode: false,
+                fallbacks: {
+                    simplifyAll: "off",
+                    nextSlideOnWindowFocus: "off",
+                    disableFocusListener: false,
+                }
+            });
+        });
+
+
+    </script>
+}

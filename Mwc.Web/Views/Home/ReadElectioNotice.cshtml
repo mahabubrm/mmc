@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "ReadElectioNotice";
+    Layout = "~/Views/Shared/_publicLayout.cshtml";
+}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf_viewer.min.css" rel="stylesheet" type="text/css" />
+<style type="text/css">
+    #pdf_container {
+        background: #ccc;
+        text-align: center;
+        display: none;
+        padding: 5px;
+        height: 820px;
+        overflow: auto;
+    }
+</style>
+
+<section class="inner-header divider parallax layer-overlay overlay-dark-8" data-bg-img="~/Content/publicsite/images/bg/bg6.jpg">
+    <div class="container pt-60 pb-60">
+        <!-- Section Content -->
+        <div class="section-content">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h3 class="font-28 text-white">
+                        Election 2024 Notice
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section: Blog -->
+<section>
+    <div class="container mt-30 mb-30 pt-30 pb-0">
+        <div class="row multi-row-clearfix">
+            <div class="col-md-12 text-center"  style="margin-bottom:20px;">                
+                <button class="btn btn-default btn-flat btn-theme-colored" onclick="LoadPdfFromUrl('@Url.Content("~/Attachments/Election/ElectionSchedule.pdf")')">
+                    নির্বাচন-২০২৪ সংশোধিত তফসিল বিবরনী
+                </button>
+                <button class="btn btn-success btn-flat btn-theme-colored" onclick="LoadPdfFromUrl('@Url.Content("~/Attachments/Election/NominationForm_2024.pdf")')">নমিনেশন পেপার</button>
+                <a href="@Url.Action("DownloadFile","Home")" class="btn btn-success btn-flat btn-theme-colored"> <i class="fa fa-download"></i> নমিনেশন পেপার ডাউনলোড </a>
+                <button class="btn btn-dark btn-theme-colored btn-flat mr-5" onclick="LoadPdfFromUrl('@Url.Content("~/Attachments/Election/UserGuide_Election.pdf")')">নমিনেশন পেপার অনলাইনে জমা দেয়ার দিক নির্দেশনা</button>
+            </div>
+            <div id="pdf_container"></div>
+        </div>
+    </div>
+</section>
+@section scripts{
+    <script type="text/javascript">
+
+
+        $(document).ready(function () {
+            var defaultPath = '~/Attachments/Election/ElectionSchedule.pdf';
+            LoadPdfFromUrl('@Url.Content("~/Attachments/Election/ElectionSchedule.pdf")');
+        });
+
+        var pdfjsLib = window['pdfjs-dist/build/pdf'];
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.worker.min.js';
+        var pdfDoc = null;
+        var scale = 1; //Set Scale for zooming PDF.
+        var resolution = 2; //Set Resolution to Adjust PDF clarity.
+        var pdf_container = document.getElementById("pdf_container");
+
+        function LoadPdfFromUrl(url) {
+            pdf_container.innerHTML = "";
+            //Read PDF from URL.
+            pdfjsLib.getDocument(url).promise.then(function (pdfDoc_) {
+                pdfDoc = pdfDoc_;
+
+                //Reference the Container DIV.
+                //var pdf_container = document.getElementById("pdf_container");
+                pdf_container.style.display = "block";
+
+                //Loop and render all pages.
+                for (var i = 1; i <= pdfDoc.numPages; i++) {
+                    RenderPage(pdf_container, i);
+                }
+            });
+        };
+        function RenderPage(pdf_container, num) {
+            pdfDoc.getPage(num).then(function (page) {
+                //Create Canvas element and append to the Container DIV.
+                var canvas = document.createElement('canvas');
+                canvas.id = 'pdf-' + num;
+                ctx = canvas.getContext('2d');
+                pdf_container.appendChild(canvas);
+
+                //Create and add empty DIV to add SPACE between pages.
+                var spacer = document.createElement("div");
+                spacer.style.height = "20px";
+                pdf_container.appendChild(spacer);
+
+                //Set the Canvas dimensions using ViewPort and Scale.
+                var viewport = page.getViewport({ scale: scale });
+                canvas.height = resolution * viewport.height;
+                canvas.width = resolution * viewport.width;
+
+                //Render the PDF page.
+                var renderContext = {
+                    canvasContext: ctx,
+                    viewport: viewport,
+                    transform: [resolution, 0, 0, resolution, 0, 0]
+                };
+
+                page.render(renderContext);
+            });
+        };
+
+    </script>
+}

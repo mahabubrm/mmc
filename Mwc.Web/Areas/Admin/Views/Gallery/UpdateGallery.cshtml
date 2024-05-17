@@ -1,0 +1,119 @@
+﻿@model Mwc.Core.Models.PictureGallery
+@{
+    ViewBag.Title = "UpdateGallery";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Gallery Info Setup</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Gallery Info Setup</li>
+                </ol>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark"></h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <a href="@Url.Action("PictureGalleryFolders","Gallery", new {Areas="Admin" })" class="btn btn-block btn-outline-primary btn-lg"><i class="fa fa-list"></i> View Galleries</a>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /.content-header -->
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <form method="post" id="frmGalleryInfo" action="@Url.Action("UpdateGallery","Gallery", new { Areas="Admin" })">
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-bars"></i>
+                                Gallery Setup
+                            </h3>
+                        </div>
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Gallery Title</label>
+                                        <input type="text" class="form-control" id="GalleryName" name="GalleryName" value="@Model.GalleryName" />
+                                        <input type="hidden" id="GalleryId" name="GalleryId" value="@Model.GalleryId" />
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Gallery Details</label>
+                                        <textarea type="text" class="form-control" id="GalleryDescription" name="GalleryDescription">@Model.GalleryDescription</textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <input type="submit" id="btnSubmit" class="btn btn-primary" value="Save" />
+                            <input type="button" id="btnCancel" class="btn btn-danger" value="Clear" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+@section scripts{
+    <script type="text/javascript">
+
+
+        $("#btnCancel").click(function () {
+            $('#frmGalleryInfo').data('bootstrapValidator').resetForm();
+            clearField();
+        });
+
+
+        $(document).ready(function () {
+
+            var data =@Html.Raw(Json.Encode(ViewBag.Message));
+            IntelliERP.Toastr.Show(data.MessageType, data.Message, null);
+
+            $('#frmGalleryInfo').bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    GalleryName: {
+                        validators: {
+                            notEmpty: {
+                                message: 'required'
+                            }
+                        }
+                    }
+                }
+            });
+
+        });
+
+        function clearField() {
+            $('#GalleryName').val('');
+            $('#GalleryDescription').val('');
+        }
+
+    </script>
+}
+
