@@ -83,6 +83,9 @@
             #topLink:hover {
                 color: #f6e900;
             }
+        .menuzord-menu > li{
+            padding:42px 0 !important;
+        }
     </style>
 </head>
 <body class="">
@@ -103,7 +106,7 @@
                         <div class="col-md-9">
                             <div class="widget no-border m-0">
                                 <ul class="list-inline">
-                                    <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-white"></i> <a class="text-white" href="#">+8801309108255</a> </li>
+                                    <li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-white"></i> <a class="text-white" href="#">+8801756046322</a> </li>
                                     <!--  <li class="text-white m-0 pl-10 pr-10"> <i class="fa fa-clock-o text-white"></i> Mon-Fri 8:00 to 2:00 </li> -->
                                     <li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-white"></i> <a class="text-white" href="#">mmcdhaka91@gmail.com</a> </li>
                                 </ul>
@@ -134,13 +137,57 @@
                                 <img src="~/Content/images/mmc_logo.png" alt="">
                             </a>
                             <ul class="menuzord-menu">
-                                <li class="active"><a href="@Url.Action("Index","Home")">Home</a> </li>
-                                <li><a href="@Url.Action("About","Home")">About us</a> </li>
-                                <li><a href="@Url.Action("Admission","Home")">Admission</a> </li>
-                                <li><a href="@Url.Action("GoverningBody","Home")">Governing Body</a> </li>
-                                <li><a href="@Url.Action("Teachers","Home")">Teachers</a> </li>
-                                <li><a href="@Url.Action("Routine","Home")">Routine</a> </li>
-                                <li><a href="@Url.Action("Contact","Home")">Contact us</a> </li>
+                                <li class="active"><a href="@Url.Action("Index","Home")">হোম</a> </li>
+                                <li>
+                                    <a href="#">আমাদের কথা</a>
+                                    <ul class="dropdown">
+                                        <li>
+                                            <a href="#">তথ্যসমূহ</a>
+                                            <ul class="dropdown">
+                                                <li><a href="@Url.Action("About","Home")">লক্ষ্য ও উদ্দেশ্য</a></li>
+                                                <li><a href="@Url.Action("Poriciti","Home")">পরিচিতি</a></li>
+                                                <li><a href="@Url.Action("PrincipalSpeech","Home")">অধ্যক্ষের বাণী</a></li>
+                                                <li><a href="@Url.Action("ChairmanSpeech","Home")">সভাপতির বাণী</a></li>
+                                                <li><a href="@Url.Action("AdvisorSpeech","Home")">প্রধান উপদেষ্টার বাণী</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">বিভাগসমূহ</a>
+                                    <ul class="dropdown">
+                                        <li><a href="@Url.Action("HscDepartment","Home")">উচ্চমাধ্যমিক</a></li>
+                                        <li><a href="@Url.Action("PassDepartment","Home")">স্নাতক (পাস)</a></li>
+                                        <li><a href="@Url.Action("HonorsDepartment","Home")">স্নাতক (সম্মান)</a></li>
+                                        <li><a href="@Url.Action("ProfessionalDepartment","Home")">স্নাতক (সম্মান) প্রফেশনাল</a></li>
+                                        <li><a href="@Url.Action("MastersDepartment","Home")">স্নাতকোত্তর</a></li>
+                                        <li><a href="@Url.Action("CollegeOffice","Home")">কলেজ অফিস</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">একাডেমিক</a>
+                                    <ul class="dropdown">
+                                        <li><a href="@Url.Action("SyllabusInfo","Home")">পাঠ্যক্রম</a></li>
+                                        <li><a href="@Url.Action("SyllabusStudyPlan","Home")">পাঠ পরিকল্পনা</a></li>
+                                        <li><a href="@Url.Action("ExamPlan","Home")">মূল্যায়ণ পদ্ধতি</a></li>
+                                        <li><a href="@Url.Action("ExamResult","Home")">পরীক্ষার ফলাফল</a></li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#home">ভর্তি তথ্য</a>
+                                    <ul class="dropdown">
+                                        <li><a href="@Url.Action("HscAdmission","Home")">উচ্চমাধ্যমিক</a></li>
+                                        <li><a href="@Url.Action("PassAdmission","Home")">স্নাতক (পাস)</a></li>
+                                        <li><a href="@Url.Action("HonorsAdmission","Home")">স্নাতক (সম্মান)</a></li>
+                                        <li><a href="@Url.Action("ProfessionalAdmission","Home")">স্নাতক (সম্মান) প্রফেশনাল</a></li>
+                                        <li><a href="@Url.Action("MastersAdmission","Home")">স্নাতকোত্তর</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="@Url.Action("Acheavements","Home")">অর্জন সমূহ</a></li>
+                                <li>
+                                    <a href="@Url.Action("AllForms","Home")">ফরম সমূহ</a>
+                                </li>
+                                <li><a href="@Url.Action("Contact","Home")">যোগাযোগ</a> </li>
                             </ul>
                         </nav>
                     </div>
@@ -222,7 +269,7 @@
                         <div class="widget dark">
                             <h5 class="widget-title line-bottom">Quick Contact</h5>
                             <ul class="list-border">
-                                <li><a href="#">+8801309108255</a></li>
+                                <li><a href="#">+8801756046322</a></li>
                                 <li><a href="#">mmcdhaka91@gmail.com</a></li>
                                 <li>
                                     <a href="#" class="lineheight-20">

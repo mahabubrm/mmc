@@ -53,16 +53,7 @@ namespace Mwc.Web.Controllers
             return View(notice);
         }
 
-        public ActionResult ExecutiveCommittee()
-        {
-            return View();
-        }
-
-        public ActionResult ReadElectioNotice()
-        {
-            return View();
-        }
-
+        
         public FileResult DownloadFile()
         {
             return File("/Attachments/Election/NominationForm_2024.pdf", "application/pdf");
@@ -86,6 +77,113 @@ namespace Mwc.Web.Controllers
         {
             return View();
         }
+
+        public ActionResult Poriciti()
+        {
+            return View();
+        }
+
+        public ActionResult PrincipalSpeech()
+        {
+            return View();
+        }
+
+        public ActionResult ChairmanSpeech()
+        {
+            return View();
+        }
+
+        public ActionResult AdvisorSpeech()
+        {
+            return View();
+        }
+
+        public ActionResult HscAdmission()
+        {
+            return View();
+        }
+
+        public ActionResult PassAdmission()
+        {
+            return View();
+        }
+
+        public ActionResult HonorsAdmission()
+        {
+            return View();
+        }
+
+        public ActionResult ProfessionalAdmission()
+        {
+            return View();
+        }
+
+        public ActionResult MastersAdmission()
+        {
+            return View();
+        }
+
+        public ActionResult HscDepartment()
+        {
+            return View();
+        }
+
+        public ActionResult PassDepartment()
+        {
+            return View();
+        }
+
+        public ActionResult HonorsDepartment()
+        {
+            return View();
+        }
+
+        public ActionResult ProfessionalDepartment()
+        {
+            return View();
+        }
+
+        public ActionResult MastersDepartment()
+        {
+            return View();
+        }
+
+        public ActionResult CollegeOffice()
+        {
+            return View();
+        }
+
+        public ActionResult SyllabusInfo()
+        {
+            return View();
+        }
+
+        public ActionResult SyllabusStudyPlan()
+        {
+            return View();
+        }
+
+        public ActionResult ExamPlan()
+        {
+            return View();
+        }
+
+        public ActionResult ExamResult()
+        {
+            return View();
+        }
+
+        public ActionResult Acheavements()
+        {
+            return View();
+        }
+
+        public ActionResult AllForms()
+        {
+            return View();
+        }
+
+
 
     }
 }
