@@ -48,5 +48,13 @@ namespace Mwc.Core.Models.Common
             Approved,
             Rejected
         }
+
+        public enum NoticType
+        {
+            Notice,
+            Minutes,
+            Forms
+        }
+
     }
 }

@@ -228,5 +228,116 @@ namespace Mwc.Web.Areas.Admin.Controllers
             }
             return RedirectToAction("NoticeBoards");
         }
+
+
+        //-------------------------Forms-----------------------------//
+
+
+        public ActionResult Forms()
+        {
+            var message = new ReturnMessage();
+            if (TempData["Message"] != null)
+            {
+                message = TempData["Message"] as ReturnMessage;
+            }
+            ViewBag.Message = message;
+            var notices = _noticeManager.GetAll().Where(o => o.NoticeType == AppConstant.NoticType.Forms.ToString()).OrderByDescending(o => o.NoticeId).ToList();
+            return View(notices);
+        }
+
+        public ActionResult AddForms()
+        {
+            var message = new ReturnMessage();
+            if (TempData["Message"] != null)
+            {
+                message = TempData["Message"] as ReturnMessage;
+            }
+            ViewBag.Message = message;
+            //ViewBag.Depts = _deptManager.GetAll().Select(o => new SelectListItem { Text = o.DepartmentName, Value = o.DeptId.ToString() }).ToList();
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult AddForms(Website_Notice model, HttpPostedFileBase attchment)
+        {
+            var path = string.Empty;
+            string noticeName = string.Empty;
+            var fileName = new SqlQryManager().GetTransactionNo();
+            if (attchment != null)
+            {
+                string filename = Path.GetFileName(attchment.FileName);
+                //string fileExt = Path.GetExtension(filename);
+                noticeName = fileName + "_" + filename;
+                path = Path.Combine(Server.MapPath("~/Attachments/Forms"), noticeName);
+
+            }
+            model.IsShowScrollBar = false;
+            model.IsActive = true;
+            model.NoticeAttachment = noticeName;
+            model.NoticeDate = DateTime.Now;
+            model.NoticeType = AppConstant.NoticType.Forms.ToString();
+            var message = _noticeManager.Add(model);
+            TempData["Message"] = message;
+            if (message.MessageType == MessageTypes.Success)
+            {
+                if (attchment != null)
+                {
+                    attchment.SaveAs(path);
+                }
+            }
+            return RedirectToAction("AddNotice");
+        }
+
+        public ActionResult DeleteForms(int noticeId)
+        {
+            var item = _noticeManager.GetById(noticeId);
+            var message = _noticeManager.Remove(item);
+            TempData["Message"] = message;
+            return RedirectToAction("Forms", "Notice");
+        }
+
+        public ActionResult EditForms(int noticeId)
+        {
+            //ViewBag.Depts = _deptManager.GetAll().Select(o => new SelectListItem { Text = o.DepartmentName, Value = o.DeptId.ToString() }).ToList();
+            var item = _noticeManager.GetById(noticeId);
+            return View(item);
+        }
+
+        [HttpPost]
+        public ActionResult EditForms(Website_Notice model, HttpPostedFileBase attchment)
+        {
+            var path = string.Empty;
+            string noticeName = string.Empty;
+            var fileName = new SqlQryManager().GetTransactionNo();
+            if (attchment != null)
+            {
+                string filename = Path.GetFileName(attchment.FileName);
+                string fileExt = Path.GetExtension(filename);
+                noticeName = fileName + "_" + filename + fileExt;
+                path = Path.Combine(Server.MapPath("~/Attachments/Forms"), noticeName);
+
+            }
+            model.IsShowScrollBar = (model.IsShowScrollBar == null) ? false : true;
+            model.IsActive = true;
+            model.NoticeAttachment = (attchment == null) ? model.NoticeAttachment : noticeName;
+            model.NoticeDate = DateTime.Now;
+            model.NoticeType = AppConstant.NoticType.Forms.ToString();
+            var message = _noticeManager.Update(model);
+            TempData["Message"] = message;
+            if (message.MessageType == MessageTypes.Success)
+            {
+                if (attchment != null)
+                {
+                    attchment.SaveAs(path);
+                }
+            }
+            return RedirectToAction("Forms");
+        }
+
+        public ActionResult ViewForms(int noticeId)
+        {
+            var item = _noticeManager.GetById(noticeId);
+            return View();
+        }
     }
 }

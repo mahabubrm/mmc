@@ -147,6 +147,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Attachments\Forms\mmc_logo.png" />
     <Content Include="Attachments\PictureGallery\pdf.png" />
     <Content Include="Attachments\Slider\638286070079501874_bg1.jpg" />
     <Content Include="Attachments\Slider\638286070207844352_bg2.jpg" />
@@ -3014,6 +3015,9 @@
     <Content Include="Content\publicsite\js\revolution-slider\fonts\revicons\revicons90c6.eot" />
     <Content Include="Content\publicsite\js\revolution-slider\fonts\revicons\revicons90c6.ttf" />
     <Content Include="Content\publicsite\js\revolution-slider\fonts\revicons\revicons90c6.woff" />
+    <Content Include="Areas\Admin\Views\Notice\Forms.cshtml" />
+    <Content Include="Areas\Admin\Views\Notice\AddForms.cshtml" />
+    <Content Include="Areas\Admin\Views\Notice\EditForms.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
