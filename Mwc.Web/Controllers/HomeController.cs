@@ -1,8 +1,10 @@
 ﻿using Mwc.Core.BusinessLayer.Interface;
 using Mwc.Core.BusinessLayer.Manager;
+using Mwc.Core.Models.Common;
 using Mwc.Core.Models.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,9 +56,11 @@ namespace Mwc.Web.Controllers
         }
 
         
-        public FileResult DownloadFile()
+        public FileResult DownloadFile(string fileName)
         {
-            return File("/Attachments/Election/NominationForm_2024.pdf", "application/pdf");
+            var FileVirtualPath = "~/Attachments/Forms/" + fileName;
+            return File(FileVirtualPath, "application/force-download", Path.GetFileName(FileVirtualPath));
+            //return File("/Attachments/Forms/" + fileName, "application/force-download");
         }
 
         public ActionResult Admission()
@@ -175,12 +179,14 @@ namespace Mwc.Web.Controllers
 
         public ActionResult Acheavements()
         {
-            return View();
+            var acheivements = _pictureGalleryItemsManager.GetAll().Where(o => o.PictureGallery.GalleryDescription.Trim() == "1122").OrderByDescending(o=>o.PicId).ToList();
+            return View(acheivements);
         }
 
         public ActionResult AllForms()
         {
-            return View();
+            var forms = _noticeManager.GetAll().Where(o => o.NoticeType.ToString() == AppConstant.NoticType.Forms.ToString()).ToList();
+            return View(forms);
         }
 
 
